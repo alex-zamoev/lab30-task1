@@ -7,24 +7,30 @@ using std::endl;
 
 int main() {
     int in = -1;
+    cpr::Response r;
     do{
         cout << "Enter command (1 - get, 2 - post, 3 - put, 4 - delete, 5 - patch, 0 - exit):";
         cin >> in;
         switch (in) {
             case 1:
-                cout << "" << endl;
+                r = cpr::Get(cpr::Url("http://httpbin.org/get"));
+                cout << r.text << endl;
                 break;
             case 2:
-                cout << "" << endl;
+                r = cpr::Post(cpr::Url("http://httpbin.org/post"), cpr::Payload({{"name", "Alex"}, {"family", "Zamoev"}}));
+                cout << r.text << endl;
                 break;
             case 3:
-                cout << "" << endl;
+                r = cpr::Put(cpr::Url{"http://www.httpbin.org/put"}, cpr::Payload{{"name", "Alex"}});
+                cout << r.text << endl;
                 break;
             case 4:
-                cout << "" << endl;
+                r = cpr::Delete(cpr::Url{"http://www.httpbin.org/delete"});
+                cout << r.text << endl;
                 break;
             case 5:
-                cout << "" << endl;
+                r = cpr::Patch(cpr::Url{"http://www.httpbin.org/patch"},cpr::Payload{{"name", "Zamoev"}});
+                cout << r.text << endl;
                 break;
             case 0:
                 cout << "Goodbye!" << endl;
@@ -35,8 +41,6 @@ int main() {
         }
     } while ((in != 0));
 
-    cpr::Response r = cpr::Post(cpr::Url("http://httpbin.org/post"), cpr::Payload({{"Alex", "Zamoev"}}));
-    std::cout << r.text << std::endl;
     return 0;
 }
 
